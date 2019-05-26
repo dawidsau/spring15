@@ -23,10 +23,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//                .antMatchers("/**").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .anyRequest().permitAll()
                 .and().csrf().disable()
-        ;
+                .formLogin()
+                .loginPage("/login")
+                .usernameParameter("loginEmail")
+                .passwordParameter("loginPassword")
+                .loginProcessingUrl("/processLogin")
+                .failureUrl("/login?error=1")
+                .defaultSuccessUrl("/");
     }
 
     @Override
