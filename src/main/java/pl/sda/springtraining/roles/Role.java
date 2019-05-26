@@ -1,9 +1,10 @@
-package pl.sda.springtraining;
+package pl.sda.springtraining.roles;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @NoArgsConstructor
 @Entity

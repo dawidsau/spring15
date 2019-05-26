@@ -1,17 +1,16 @@
-package pl.sda.springtraining;
+package pl.sda.springtraining.users;
 
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
+import pl.sda.springtraining.roles.RoleRepository;
 
 @Service
 public class UserRegistrationService {
 
-//    @Autowired
-//    private PasswordEncoder encoder;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -24,7 +23,7 @@ public class UserRegistrationService {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new RuntimeException("User with email: "
                     + user.getUsername() + " exists");
-        }else{
+        } else {
             userRepository.save(user);
         }
     }
@@ -36,6 +35,7 @@ public class UserRegistrationService {
                 .street(dto.getStreet())
                 .zipCode(dto.getZipCode())
                 .build();
+
         return User.builder()
                 .username(dto.getUsername())
                 .birthDate(dto.getBirthDate())
@@ -45,18 +45,19 @@ public class UserRegistrationService {
                 .phone(dto.getPhone())
                 .preferEmails(dto.isPreferEmails())
                 .userAddress(address)
-                .passwordHash("aaa")
-//                .passwordHash(encoder.encode(dto.getPassword()))
+                .roles(Sets.newHashSet(
+                        roleRepository.findByRoleName("ROLE_USER")))
+                .passwordHash(encoder.encode(dto.getPassword()))
                 .build();
 
     }
 
-    @PostConstruct
-    public void initializeRoles(){
-        if (roleRepository.count() == 0){
-            roleRepository.save(new Role("ROLE_USER"));
-            roleRepository.save(new Role("ROLE_ADMIN"));
-        }
-    }
+//    @PostConstruct
+//    public void initializeRoles(){
+//        if (roleRepository.count() == 0){
+//            roleRepository.save(new Role("ROLE_USER"));
+//            roleRepository.save(new Role("ROLE_ADMIN"));
+//        }
+//    }
 
 }

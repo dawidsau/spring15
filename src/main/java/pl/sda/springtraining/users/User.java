@@ -1,8 +1,10 @@
-package pl.sda.springtraining;
+package pl.sda.springtraining.users;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
+import pl.sda.springtraining.roles.Role;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -30,6 +32,7 @@ public class User {
     private String phone;
     private boolean preferEmails;
     @ManyToMany
+    @JoinTable(name = "users_roles")
     private Set<Role> roles = new HashSet<>();
 
 }
