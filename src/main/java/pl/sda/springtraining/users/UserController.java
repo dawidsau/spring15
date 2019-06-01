@@ -16,12 +16,12 @@ public class UserController {
     @Autowired
     private UserRegistrationService userRegistrationService;
 
-    @GetMapping(value = "/register")
+    @GetMapping(value = "/register") //ta adnotacja powoduje, że ta metoda zareaguje na zapytanie HTTP typu GET na adres /register
     public String showForm(Model model){
         UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
-        model.addAttribute("userDto", userRegistrationDTO);
-        model.addAttribute("countries", Countries.values());
-        return "registerForm";
+        model.addAttribute("userDto", userRegistrationDTO); //sluzy jako pusta foremka na dane + polaczenie pól dla springa
+        model.addAttribute("countries", Countries.values()); //zapewnia wartosci w dropdownie
+        return "registerForm"; //sluzy do wyswietlenia konkretnego htmla o takiej nazwie (MVC)
     }
 
     @PostMapping(value="/register")

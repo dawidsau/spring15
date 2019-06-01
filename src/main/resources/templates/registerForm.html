@@ -7,7 +7,7 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header-fragment"></div>
-<form method="post" action="/register" th:object="${userDto}">
+<form method="post" action="/register" th:object="${userDto}"> <!--$ oznacza szukanie w modelu po takim kluczu-->
     <input type="text" th:field="*{firstName}">
     <span th:errors="*{firstName}"></span> <br>
     <input type="text" th:field="*{lastName}"><br> <!--todo uzupelnic komunikaty bledow-->
