@@ -2,6 +2,7 @@ package pl.sda.springtraining.users;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,19 @@ public class UserContext {
             return null;
         }
         return authentication.getName();
+    }
+
+    public boolean isAdmin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof AnonymousAuthenticationToken) {
+            return false;
+        }
+        if (authentication.getAuthorities().stream()
+                .anyMatch(e -> e.getAuthority().equals("ROLE_ADMIN"))) {
+            return true;
+        }
+
+        return false;
     }
 
     public boolean isLoggedIn() {

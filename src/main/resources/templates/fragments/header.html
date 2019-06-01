@@ -8,8 +8,10 @@
     <div class="topnav">
         <a th:if="!${@userContext.isLoggedIn()}" href="/register">Rejestracja</a>
         <a th:if="!${@userContext.isLoggedIn()}" href="/login">Logowanie</a>
-        <a th:if="${@userContext.isLoggedIn()}" href="/logout">Wyloguj</a>
-        <p style="color: white" th:if="${@userContext.isLoggedIn()}"
+        <a th:if="${@userContext.isAdmin()}" href="/admin/product">Dodaj produkt</a>
+        <a th:if="${@userContext.isLoggedIn()}" href="/products">Produkty</a>
+        <a th:if="${@userContext.isLoggedIn()}" style="float: right" href="/logout">Wyloguj</a>
+        <p style="color: white; float: right" th:if="${@userContext.isLoggedIn()}"
            th:text="${@userContext.provideUsername()}">User</p>
     </div>
 </div>

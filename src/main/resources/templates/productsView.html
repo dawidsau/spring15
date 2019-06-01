@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <div th:replace="fragments/header :: headercss"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: header-fragment"></div>
+<form action="/products">
+    <input name="searchText" th:value="${returnedSearchText}" placeholder="szukaj">
+    <select name="searchProductType">
+        <option value=""></option>
+        <option th:each="pt : ${productTypes}" th:value="${pt}"
+                th:text="${pt.plName}" th:selected="${returnedType eq pt}"></option>
+    </select>
+    <button>Szukaj</button>
+</form>
+<br>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Nazwa produktu</th>
+        <th>Stan Magazynowy</th>
+        <th>Cena</th>
+        <th>Typ produktu</th>
+    </tr>
+    <tr th:each="product : ${productsList}">
+        <td th:text="*{product.id}"></td>
+        <td th:text="*{product.productName}"></td>
+        <td th:text="*{product.stockAmount}"></td>
+        <td th:text="*{product.price}"></td>
+        <td th:text="*{product.type}"></td>
+    </tr>
+
+</table>
+
+</body>
+</html>
