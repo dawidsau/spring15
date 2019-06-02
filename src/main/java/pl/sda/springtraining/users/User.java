@@ -1,6 +1,7 @@
 package pl.sda.springtraining.users;
 
 import lombok.*;
+import pl.sda.springtraining.BaseEntity;
 import pl.sda.springtraining.roles.Role;
 
 import javax.persistence.*;
@@ -14,11 +15,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id; //todo utworzyć "BaseEntity"
+public class User extends BaseEntity {
 
     private String firstName;
     private String lastName;

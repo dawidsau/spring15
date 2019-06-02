@@ -1,6 +1,7 @@
 package pl.sda.springtraining.products;
 
 import lombok.*;
+import pl.sda.springtraining.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,11 +16,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table (name = "products")
-public class Product {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Product extends BaseEntity {
 
     private String productName;
     private Long stockAmount;

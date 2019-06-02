@@ -45,7 +45,7 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public void saveProductAfterEdit(Product product) {
+    public void saveProduct(Product product) {
         productRepository.save(product);
     }
 

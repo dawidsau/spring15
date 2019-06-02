@@ -26,11 +26,12 @@
         <th>Typ produktu</th>
         <th>Akcje</th>
     </tr>
-    <tr th:each="product : ${productsList}"  th:id="*{'row_'+product.id}">
+    <tr th:each="product : ${productsList}" th:id="*{'row_'+product.id}"> <!--dynamiczne nadawanie id -->
         <td th:text="*{product.id}"></td>
-        <td >
-<!--            <a th:href="@{/admin/product/}+*{product.id}">-->
-            <a th:href="@{/admin/product/{id}(id=${product.id})}"> <!--@ pozwala na zachowanie kontekstu aplikacji + powinnismy jej uzywac przy adresach-->
+        <td>
+            <!--            <a th:href="@{/admin/product/}+*{product.id}">-->
+            <a th:href="@{/admin/product/{id}(id=${product.id})}">
+                <!--@ pozwala na zachowanie kontekstu aplikacji + powinnismy jej uzywac przy adresach-->
                 <span th:text="*{product.productName}"></span>
             </a>
         </td>
@@ -39,14 +40,30 @@
         <td th:text="*{product.type}"></td>
         <td>
             <button type="button" th:onclick="'javascript:deleteProduct('+${product.id}+');'">x</button>
+<!--            <button type="button" th:onclick="'javascript:deleteRow('+this+');'">x</button>-->
         </td>
     </tr>
 
 </table>
-<!--<script type="text/javascript">-->
-<!--     function a(id) {-->
-<!--        -->
-<!--    }-->
-<!--</script>-->
+<script type="text/javascript"> //tutaj trafią funkcje JSowe
+    function deleteProduct(id) {
+        $.ajax({ //$ - jquery(biblioteka JS)
+            url: '/admin/product/' + id + '/delete',
+            type: 'POST',
+            success: function (response) {
+                console.log("Pykło")
+                $('#row_' + id).remove();
+            }
+        });
+
+    }
+
+    function deleteRow(btn) {
+        console.log("asdasdasd")
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
+</script>
 </body>
 </html>

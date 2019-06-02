@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -40,13 +39,14 @@ public class AdminProductController {
             model.addAttribute("productTypes", ProductType.values());
             return "editProduct";
         } else {
-            return "redirect:/admin/product";
+            throw new ProductNotFoundException("Nie znaleziono produktu o id "+id);
+//            return "redirect:/admin/product";
         }
     }
 
     @PostMapping(value = "/product/{id}") //id nie jest niezbedne - sluzy nam jako fortel
     public String saveChanges(@ModelAttribute Product product, @PathVariable Long id) {
-        productService.saveProductAfterEdit(product);
+        productService.saveProduct(product);
         return "redirect:/products";
     }
 

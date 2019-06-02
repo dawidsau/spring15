@@ -2,6 +2,7 @@ package pl.sda.springtraining.roles;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import pl.sda.springtraining.BaseEntity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,11 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "ROLES")
-public class Role {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+public class Role extends BaseEntity {
 
     private String roleName;
 
