@@ -3,7 +3,6 @@ package pl.sda.springtraining.products;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,14 +28,14 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    List<Product> findProducts(String searchText, ProductType searchProductType){ // todo tu nie powinny wychodzić encje -> DTO
+    List<Product> findProducts(String searchText, ProductType searchProductType) { // todo tu nie powinny wychodzić encje -> DTO
         if (StringUtils.isBlank(searchText) && searchProductType == null) {
             return productRepository.findAll();
         }
         if (StringUtils.isBlank(searchText)) {
             return productRepository.findProductsByType(searchProductType);
         }
-        if (searchProductType == null){
+        if (searchProductType == null) {
             return productRepository.findProductsByProductNameLike(searchText);
         }
         return productRepository.findProductsByProductNameLikeAndType(searchText, searchProductType);
@@ -48,5 +47,10 @@ public class ProductService {
 
     public void saveProductAfterEdit(Product product) {
         productRepository.save(product);
+    }
+
+    public void removeProduct(Long id) {
+        findProductByID(id)
+                .ifPresent(productRepository::delete);
     }
 }

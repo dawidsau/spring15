@@ -21,5 +21,8 @@
     <button>Zapisz</button>
 
 </form>
+<form method="post" th:action="'/admin/product/'+${productToEdit.id}+'/delete'">
+    <button>Usuń</button>
+</form>
 </body>
 </html>

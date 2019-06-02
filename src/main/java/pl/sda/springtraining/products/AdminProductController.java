@@ -49,4 +49,10 @@ public class AdminProductController {
         productService.saveProductAfterEdit(product);
         return "redirect:/products";
     }
+
+    @PostMapping(value = "/product/{id}/delete")
+    public String deleteProduct(@PathVariable Long id){
+        productService.removeProduct(id);
+        return "redirect:/products";
+    }
 }
