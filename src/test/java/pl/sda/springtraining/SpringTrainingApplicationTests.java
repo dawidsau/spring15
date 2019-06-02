@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -32,11 +33,19 @@ public class SpringTrainingApplicationTests {
     }
 
     @Test
-    @WithUserDetails("superUser")
-    public void contextLoads() throws Exception {
+    @WithMockUser(username = "user",roles = "USER")
+    public void userCanGetHere() throws Exception {
         this.mockMvc
                 .perform(get("/products"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "user",roles = "USER")
+    public void userCantGetHere() throws Exception {
+        this.mockMvc
+                .perform(get("/admin/product"))
+                .andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 
 }

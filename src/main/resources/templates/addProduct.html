@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Product</title>
+    <div th:replace="fragments/header :: headercss"></div>
 </head>
 <body>
+<div th:replace="fragments/header :: header-fragment"></div>
+
 <form method="post" action="/admin/product">
     <input name="productName" placeholder="nazwa produktu">
     <input name="stockAmount" placeholder="stan magazynowy">

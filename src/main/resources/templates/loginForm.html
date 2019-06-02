@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Logowanie</title>
+    <div th:replace="fragments/header :: headercss"></div>
 </head>
 <body>
+<div th:replace="fragments/header :: header-fragment"></div>
+
 <form action="/processLogin" method="post">
     <input type="text" name="loginEmail"><br>
     <input type="text" name="loginPassword"><br>

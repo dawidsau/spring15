@@ -3,12 +3,11 @@ package pl.sda.springtraining.products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -22,13 +21,32 @@ public class AdminProductController {
         model.addAttribute("productTypes", ProductType.values());
         return "addProduct";
     }
+
     @PostMapping(value = "/product")
     public String addProduct(@RequestParam String productName,
                              @RequestParam BigDecimal price,
                              @RequestParam String url,
                              @RequestParam Long stockAmount,
                              @RequestParam ProductType productType) {
-        productService.addProduct(productName,stockAmount,url,price,productType);
-    return "redirect:/products"; //przekierowanie na urla
+        productService.addProduct(productName, stockAmount, url, price, productType);
+        return "redirect:/products"; //przekierowanie na urla
+    }
+
+    @GetMapping(value = "/product/{id}")
+    public String editProduct(Model model, @PathVariable Long id) {
+        Optional<Product> productByID = productService.findProductByID(id);
+        if (productByID.isPresent()) {
+            model.addAttribute("productToEdit", productByID.get());
+            model.addAttribute("productTypes", ProductType.values());
+            return "editProduct";
+        } else {
+            return "redirect:/admin/product";
+        }
+    }
+
+    @PostMapping(value = "/product/{id}") //id nie jest niezbedne - sluzy nam jako fortel
+    public String saveChanges(@ModelAttribute Product product, @PathVariable Long id) {
+        productService.saveProductAfterEdit(product);
+        return "redirect:/products";
     }
 }

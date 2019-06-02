@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Product</title>
+    <div th:replace="fragments/header :: headercss"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: header-fragment"></div>
+
+<h1 th:text="${'Edycja produktu '+productToEdit.id}"></h1>
+<form method="post" th:action="'/admin/product/'+${productToEdit.id}" th:object="${productToEdit}">
+    <input placeholder="nazwa produktu" th:field="*{productName}">
+    <input placeholder="stan magazynowy" th:field="*{stockAmount}">
+    <input placeholder="cena" th:field="*{price}">
+    <input placeholder="url obrazka" th:field="*{url}">
+    <select th:field="*{type}">
+        <option th:each="pt : ${productTypes}" th:value="${pt}"
+                th:text="${pt.plName}" th:selected="${productToEdit.type eq pt}"></option>
+    </select>
+    <button>Zapisz</button>
+
+</form>
+</body>
+</html>

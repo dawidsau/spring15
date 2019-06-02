@@ -17,7 +17,7 @@
     <button>Szukaj</button>
 </form>
 <br>
-<table>
+<table border="1px">
     <tr>
         <th>Id</th>
         <th>Nazwa produktu</th>
@@ -27,7 +27,12 @@
     </tr>
     <tr th:each="product : ${productsList}">
         <td th:text="*{product.id}"></td>
-        <td th:text="*{product.productName}"></td>
+        <td >
+<!--            <a th:href="@{/admin/product/}+*{product.id}">-->
+            <a th:href="@{/admin/product/{id}(id=${product.id})}"> <!--@ pozwala na zachowanie kontekstu aplikacji + powinnismy jej uzywac przy adresach-->
+                <span th:text="*{product.productName}"></span>
+            </a>
+        </td>
         <td th:text="*{product.stockAmount}"></td>
         <td th:text="*{product.price}"></td>
         <td th:text="*{product.type}"></td>
