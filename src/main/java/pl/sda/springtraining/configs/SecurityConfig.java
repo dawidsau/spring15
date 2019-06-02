@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register").permitAll() //kolejność jest ważna - elementy wyższe nadpisują niższe
                 .antMatchers("/login").permitAll()
                 .antMatchers("/css/**").permitAll() //odblokowujemy dostęp do zasobow statycznych
+                .antMatchers("/api/**").permitAll() //odblokowujemy dostęp do zasobow statycznych
                 .antMatchers("/admin/**").hasAnyAuthority( "ROLE_ADMIN")
                 .antMatchers("/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .anyRequest().permitAll()
