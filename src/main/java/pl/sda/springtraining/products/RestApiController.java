@@ -38,7 +38,7 @@ public class RestApiController {
 
         if (product.getId() == null) {
             productService.saveProduct(product);
-            return ResponseEntity.ok(product);
+            return ResponseEntity.status(201).body(product);
         }
         return ResponseEntity.unprocessableEntity().build();
     }
